@@ -4,7 +4,7 @@ on: push
 
 jobs:
   rust:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -13,10 +13,10 @@ jobs:
         run: rustup toolchain install nightly
 
       - name: Benchmark
-        run: Measure-Command { cargo +nightly build --release }
+        run: time cargo +nightly build --release
 
   go:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -28,4 +28,4 @@ jobs:
           cache: false
 
       - name: Benchmark
-        run: Measure-Command { go build main.go }
+        run: time go build main.go
