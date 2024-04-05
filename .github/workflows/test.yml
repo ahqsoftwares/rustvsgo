@@ -1,0 +1,31 @@
+name: Test go vs rust
+
+on: push
+
+jobs:
+  rust:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        run: rustup toolchain install nightly
+
+      - name: Benchmark
+        run: Measure-Command { cargo +nightly build --release }
+
+  go:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup GoLang
+        uses: actions/setup-go@v5
+        with:
+          cache: false
+
+      - name: Benchmark
+        run: Measure-Command { go build main.go }
