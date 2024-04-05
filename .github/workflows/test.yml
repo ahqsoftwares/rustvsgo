@@ -4,7 +4,7 @@ on: push
 
 jobs:
   rust:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,7 +16,7 @@ jobs:
         run: Measure-Command { cargo +nightly build --release }
 
   go:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
