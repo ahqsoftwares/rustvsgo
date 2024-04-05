@@ -1,0 +1,39 @@
+name: Test go vs rust
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        run: rustup toolchain install nightly
+
+      - name: Benchmark
+        run: time cargo +nightly build --release
+
+      - name: Benchmark Cache Run
+        run: time cargo +nightly build --release
+
+  go:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup GoLang
+        uses: actions/setup-go@v5
+        with:
+          cache: false
+
+      - name: Benchmark Dry Run
+        run: time go build main.go
+
+      - name: Benchmark Cache Run
+        run: time go build main.go
